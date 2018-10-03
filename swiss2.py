@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from Queue import LifoQueue, Full
+from queue import Queue, Full
 
 # Потокобезопасная очередь размер в 5 элементов
-bucket = LifoQueue(5)
+bucket = Queue(5)
 
 def putToBucket(el):
   # Метод принимает элемент и если очередь полна эелемент не попадает в очередь
