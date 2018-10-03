@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
+def fun(self):
+  pass
+
 class meta(type):
     def __new__(mcs, name, bases, dict):
-      def fun():
-          pass
-      cls = type.__new__(mcs, name, bases, dict)
-      cls.bar = fun
-      return cls
+      dict["bar"] = fun
+      return type.__new__(mcs, name, bases, dict)
 
 class A(object):
   __metaclass__ = meta
@@ -25,7 +25,7 @@ def call_foo(inst):
       return True
     else:
       return False
-  except AttributeError as e:
+  except AttributeError:
     return False
   finally:
     return False
