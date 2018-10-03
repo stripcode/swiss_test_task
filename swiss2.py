@@ -1,15 +1,30 @@
-# -*- coding: utf-8 -*-
-from queue import Queue, Full
+class A(object):
+  def __init__(self, value):
+    self._value = value
 
-# Потокобезопасная очередь размер в 5 элементов
-bucket = Queue(5)
+  def foo(self):
+    self.bar()
+    return self._value
 
-def putToBucket(el):
-  # Метод принимает элемент и если очередь полна эелемент не попадает в очередь
+  def __getattr__(self, name):
+    if name == "bar":
+      def bar():
+        pass
+      return bar
+    else:
+      raise AttributeError("attr not found")
+
+
+def call_foo(inst):
   try:
-    bucket.put_nowait(el)
-  except Full as e:
-    print("Очередь полна и не может принять элемент %s" % el)
+    assert isinstance(inst, A)
+    if inst.foo() < 10:
+      return True
+    else:
+      return False
+  except AttributeError as e:
+    return False
+  finally:
+    return False
 
-for i in range(0, 9):
-  putToBucket(i)
+print(call_foo(A(5)))
