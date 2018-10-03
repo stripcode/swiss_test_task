@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 
+class meta(type):
+    def __new__(mcs, name, bases, dict):
+      def fun():
+          pass
+      cls = type.__new__(mcs, name, bases, dict)
+      cls.bar = fun
+      return cls
+
 class A(object):
+  __metaclass__ = meta
+
   def __init__(self, value):
     self._value = value
 
   def foo(self):
     self.bar()
     return self._value
-
-# Грязный хак - но как вариант
-def fun(cls):
-  pass
-
-A.bar = fun
-
 
 def call_foo(inst):
   try:
@@ -22,7 +25,7 @@ def call_foo(inst):
       return True
     else:
       return False
-  except AttributeError:
+  except AttributeError as e:
     return False
   finally:
     return False
