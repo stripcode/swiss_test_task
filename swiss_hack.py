@@ -9,7 +9,7 @@ class A(object):
     return self._value
 
 # Грязный хак - но как вариант
-def fun():
+def fun(self):
   pass
 
 A.bar = fun
